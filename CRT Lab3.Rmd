@@ -21,35 +21,40 @@ library(tidyverse)
 
 ```{r PartA}
 #Three fundamental components of a function:
-1. 
-2. 
-3.  
+#1. body(): the statements executed when the function runs
+#2. formals(): the arguments supplied to the function
+#3. environment(): the structure that determines how the function finds the values associated with the names
 
 #Three ways functions can be stored/applied.
-1.
-2.
-3.
+#1. A function can be stored as an object.
+#2.
+#3.
 
 ```
 
 ## Part B: Applied practice
 1. Write a function to calculate the mean that removes missing data before conducting the calculation. You may not use base::mean or any similar function that conducts a mean calculation. Include a warning in your function if missing data have been removed that prints the total number of cases that were removed.
 
-2. Test your function to make sure it (a) provides the expected results, and (b) gives identical output to base::mean when na.rm = TRUE. Make sure that you test your data against a vector that has missing data.
-
-3. Turn the following three lines of code into three different functions. Make sure to give them meaningful names. Test the functions to make sure they provide the expected output.
-
-
-
-```{r PartB_1_3}
+```{r PartB1}
 
 ```
 
+2. Test your function to make sure it (a) provides the expected results, and (b) gives identical output to base::mean when na.rm = TRUE. Make sure that you test your data against a vector that has missing data.
+```{r PartB2}
+
+```
+3. Turn the following three lines of code into three different functions. Make sure to give them meaningful names. Test the functions to make sure they provide the expected output.
+```{r PartB3}
+
+```
 4. Write a function that takes a data frame as its input and returns a data frame with only the numeric columns.
 
+```{r PartB4}
+
+```
 5. Write a function that uses the function you wrote in Question 5, and returns a data frame with the mean and standard deviation of each numeric column. If columns are omitted (because they are non-numeric), print a message stating the specific columns that were not included.
 
-```{r PartB_4_5}
+```{r PartB5}
 
 ```
 
