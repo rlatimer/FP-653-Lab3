@@ -10,7 +10,7 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-library(tidyverse)
+needs(tidyverse, palmerpenguins)
 ```
 
 ## Part A: Foundations
@@ -27,8 +27,8 @@ library(tidyverse)
 
 #Three ways functions can be stored/applied.
 #1. A function can be stored as an object.
-#2.
-#3.
+#2. Anonymous function (unbound to name)
+#3. Stored in a list
 
 ```
 
@@ -36,25 +36,74 @@ library(tidyverse)
 1. Write a function to calculate the mean that removes missing data before conducting the calculation. You may not use base::mean or any similar function that conducts a mean calculation. Include a warning in your function if missing data have been removed that prints the total number of cases that were removed.
 
 ```{r PartB1}
+mn <- function(x) {
+    if(sum(is.na(a)) > 0) {
+    warning(sum(is.na(a)), " counts were removed due to missingness")
+  }
+  d <- na.omit(a)
+    sum(d)/length(d)
+}
 
 ```
 
 2. Test your function to make sure it (a) provides the expected results, and (b) gives identical output to base::mean when na.rm = TRUE. Make sure that you test your data against a vector that has missing data.
 ```{r PartB2}
+a <- c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, NA)
+
+mn(a)
+mean(a, na.rm = TRUE)
+
 
 ```
 3. Turn the following three lines of code into three different functions. Make sure to give them meaningful names. Test the functions to make sure they provide the expected output.
 ```{r PartB3}
 
+na_count <- function(x) {
+  sum(is.na(x))
+}
+
+prop_rep <- function(x) {
+  map_dbl(split(x, x), length)/length(x)
+}
+
+prop_rep(mtcars$cyl)
+
+znorm <- function(x) {
+  (x - mean(x, na.rm = T)) /
+    sd(x, na.rm = T)
+}
+znorm(mtcars$mpg)
 ```
 4. Write a function that takes a data frame as its input and returns a data frame with only the numeric columns.
 
 ```{r PartB4}
-
+num_cols <- function(x) {
+  sub <- map_lgl(x, is.numeric)
+  x <- x[, sub]
+  return(x)
+  }
 ```
 5. Write a function that uses the function you wrote in Question 5, and returns a data frame with the mean and standard deviation of each numeric column. If columns are omitted (because they are non-numeric), print a message stating the specific columns that were not included.
 
 ```{r PartB5}
 
+col_m_sd <- function(x) {
+  d <- num_cols(x)
+
+  if(length(x) != length(d)) {
+    non_nm <- names(x[, !(colnames(x)) %in% names(d)])
+    warning("The following non-numeric columns were ommitted:", paste(non_nm, collapse = " "))
+  }
+  
+  d %>% 
+  pivot_longer(everything(), names_to = "var", values_to = "val") %>% 
+  group_by(var) %>% 
+  summarise(mean = mean(val, na.rm = TRUE),
+            sd = sd(val, na.rm = TRUE))
+}
+  
+
+col_m_sd(penguins)
 ```
+
 
